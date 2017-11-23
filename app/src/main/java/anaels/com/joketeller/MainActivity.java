@@ -1,15 +1,10 @@
 package anaels.com.joketeller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.udacity.gradle.jokes.Joker;
-
-import anaels.com.jokelibrary.JokeActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -44,14 +39,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        //We ge tthe joker
-        Joker myJoker = new Joker();
-        //We create a new joke
-        String joke = myJoker.getJoke();
-        //We launch the library
-        Intent myIntent = new Intent(this, JokeActivity.class);
-        myIntent.putExtra(JokeActivity.KEY_INTENT_JOKE, joke);
-        startActivity(myIntent);
+        new EndpointsAsyncTask().execute(this);
+
     }
 
 
