@@ -1,13 +1,16 @@
 package anaels.com.joketeller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import anaels.com.jokelibrary.JokeActivity;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements EndpointsAsyncTask.OnJokeRecovered {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +42,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        new EndpointsAsyncTask().execute(this);
+        EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
+        endpointsAsyncTask.onJokeRecovered = this;
+        endpointsAsyncTask.execute();
 
     }
 
-
+    @Override
+    public void onJokeRecovered(String joke) {
+        Intent myIntent = new Intent(this, JokeActivity.class);
+        myIntent.putExtra(JokeActivity.KEY_INTENT_JOKE, joke);
+        startActivity(myIntent);
+    }
 }
